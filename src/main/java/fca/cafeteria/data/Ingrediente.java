@@ -1,17 +1,29 @@
 package fca.cafeteria.data;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tingrediente")
 public class Ingrediente {
-    private int idIngrediente;
+    @Id
+    @Column(name = "id")
+    private int id;
+    @Column(name = "nombre")
     private String nombre;
+    @Column(name = "descripcion")
     private String descripcion;
+    @Column(name = "costo")
     private float costo;
 
     public void setIdIngrediente(int idIngrediente) {
-        this.idIngrediente = idIngrediente;
+        this.id = id;
     }
 
     public int getIdIngrediente() {
-        return this.idIngrediente;
+        return this.id;
     }
 
     public void setNombre(String nombre) {

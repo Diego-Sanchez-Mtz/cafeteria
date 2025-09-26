@@ -4,5 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CafeteriaRepository extends JpaRepository {
+public interface BebidaRepository extends JpaRepository <Bebida, Integer> {
+    Bebida findByNombre(String nombre);
 }

@@ -16,7 +16,7 @@ public class Bebida {
     @Column(name = "descripcion")
     private String descripcion;
     @Column(name = "idtipobebida")
-    private int idTipoBebida;
+    private Integer idTipoBebida;
 
     public void setId(int id) {
         this.id = id;
@@ -42,7 +42,7 @@ public class Bebida {
         return descripcion;
     }
 
-    public void setIdTipoBebida(int idTipoBebida) {
+    public void setIdTipoBebida(Integer idTipoBebida) {
         this.idTipoBebida = idTipoBebida;
     }
 
