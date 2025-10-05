@@ -1,32 +1,31 @@
 package fca.cafeteria.data;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "ttipoBebida")
 public class TipoBebida {
     @Id
-    @Column(name = "id")
-    private int id;
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    private Integer id;
     @Column(name = "descripcion")
     private String descripcion;
+    @OneToMany(mappedBy = "tipoBebida", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Bebida> bebidas = new ArrayList<>();
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
+    public List<Bebida> getBebidas() { return bebidas; }
+    public void setBebidas(List<Bebida> bebidas) { this.bebidas = bebidas; }
 }

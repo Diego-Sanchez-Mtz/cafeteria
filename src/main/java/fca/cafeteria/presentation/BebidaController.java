@@ -19,8 +19,7 @@ public class BebidaController {
             @RequestParam String nombre,
             @RequestParam String tipoBebida){
 
-        Bebida nuevaBebida = bebidaDomain.registrarBebida(nombre, tipoBebida);
+        return bebidaDomain.registrarBebida(nombre, tipoBebida);
 
-        return nuevaBebida;
     }
 }

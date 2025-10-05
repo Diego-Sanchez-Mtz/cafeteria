@@ -10,40 +10,45 @@ import org.springframework.stereotype.Service;
 public class BebidaDomain {
 
     private final BebidaRepository bebidaRepository;
-    private final TipoBebidaDomain tipoBebidaDomain;
+    private final TipoBebidaRepository tipoBebidaRepository;
 
-    //Inyeccion de dependencias por medio del contructor
-    public BebidaDomain (BebidaRepository bebidaRepository, TipoBebidaRepository tipoBebidaRepository, TipoBebidaDomain tipoBebidaDomain) {
+    public BebidaDomain(BebidaRepository bebidaRepository, TipoBebidaRepository tipoBebidaRepository) {
         this.bebidaRepository = bebidaRepository;
-        this.tipoBebidaDomain = tipoBebidaDomain;
+        this.tipoBebidaRepository = tipoBebidaRepository;
     }
 
-    public boolean existeBebida(String bebida) {
-        return bebidaRepository.findByNombre(bebida) != null;
+    public boolean existeBebida(String nombreBebida) {
+        return bebidaRepository.findByNombre(nombreBebida) != null;
     }
 
     public Bebida registrarBebida(String nombre, String tipoDescripcion) {
         // Verificamos si ya existe la bebida
         if (existeBebida(nombre)) {
+            System.out.println("Bebida existente");
             return null;
         }
 
-        Integer idTipo;
-
+        TipoBebida tipo = tipoBebidaRepository.findByDescripcion(tipoDescripcion)
+                .orElseGet(() -> {
+                    // Si no existe, lo creamos
+                    TipoBebida nuevo = new TipoBebida();
+                    nuevo.setDescripcion(tipoDescripcion);
+                    return tipoBebidaRepository.save(nuevo);
+                });
         // Verificamos si ya existe el tipo
-        if (tipoBebidaDomain.existeTipoBebida(tipoDescripcion)) {
+        /*if (tipoBebidaDomain.existeTipoBebida(tipoDescripcion)) {
             TipoBebida tipo = tipoBebidaDomain.obtenerPorDescripcion(tipoDescripcion);
             idTipo = tipo.getId();
         }else{
             // Si no existe el tipo, lo registramos
             TipoBebida nuevoTipo = tipoBebidaDomain.registrarTipoBebida(tipoDescripcion);
             idTipo = nuevoTipo.getId();
-        }
+        }*/
 
         // Construimos la nueva bebida
         Bebida bebida = new Bebida();
         bebida.setNombre(nombre);
-        bebida.setIdTipoBebida(idTipo);
+        bebida.setTipoBebida(tipo);
 
         return bebidaRepository.save(bebida);
     }
